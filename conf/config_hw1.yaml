@@ -25,7 +25,7 @@ alg:
   ac_dim: 0 ## This will be overridden in the code
   ob_dim: 0 ## This will be overridden in the code
   network:
-    layer_sizes: [256, 256]
+    layer_sizes: [64, 32]
     activations: ["tanh", "tanh"]
     output_activation: "identity" 
 
