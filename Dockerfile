@@ -6,11 +6,6 @@ FROM nvidia/cudagl:11.4.2-base-ubuntu20.04 as base
 # ARCH and CUDA are specified again because the FROM directive resets ARGs
 # (but their default value is retained if set previously)
 
-ARG UBUNTU_VERSION
-ARG ARCH
-ARG CUDA
-ARG CUDNN=7.6.5.32-1
-
 SHELL ["/bin/bash", "-c"]
 
 
@@ -25,11 +20,6 @@ RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificate
     git mercurial subversion
     
 
-SHELL ["/bin/bash", "-c"]
-
-RUN apt-get update -y
-# RUN apt-get install -y python3-dev python3-pip
-RUN apt-get update --fix-missing
 RUN apt-get install -y wget bzip2 ca-certificates git vim
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 		build-essential \
@@ -39,9 +29,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         unzip swig libfreetype6-dev \
         libosmesa6-dev patchelf ffmpeg \
         freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libgl1-mesa-glx libglu1-mesa libglu1-mesa-dev libglew1.6-dev mesa-utils
-        
-# Not sure why this is needed
-ENV LANG C.UTF-8
 
 # Not sure what this is fixing
 # COPY ./files/Xdummy /usr/local/bin/Xdummy
@@ -74,18 +61,7 @@ RUN ls
 ## Install the requirements for your learning code.
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-<<<<<<< HEAD
 
-# RUN conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
-
-# COPY you code to the docker image here.
-# e.g.
-COPY tools/openAIGym.py main.py
-ADD conf conf
-ADD hw1 hw1
-ADD tools tools
-COPY run_hw1_bc.py run_hw1_bc.py
-=======
 ## Install pytorch and cuda
 RUN pip install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
 
@@ -107,7 +83,6 @@ COPY run_hw3_ql.py run_hw3_ql.py
 COPY run_hw4_gc.py run_hw4_gc.py
 COPY run_hw5_expl.py run_hw5_expl.py
 COPY run_hw6_sim2real.py run_hw6_sim2real.py
->>>>>>> main
 
 ## Check the file were copied
 RUN ls

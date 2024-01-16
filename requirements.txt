@@ -20,12 +20,6 @@ atari_py==0.2.6
 # cudatoolkit==11.7
 protobuf==3.20
 networkx==2.5
-<<<<<<< HEAD
-# git+https://github.com/montrealrobotics/doodad.git@master ## Comment this for now to make dev easier
-pytest==7.4.3
-pandas==2.1.4
-=======
 pytest==7.4.3
 pandas==2.0.3
 chardet==5.2.0
->>>>>>> main
