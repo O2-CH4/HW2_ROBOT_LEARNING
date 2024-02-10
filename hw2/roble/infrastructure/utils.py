@@ -44,7 +44,7 @@ def sample_trajectories(env, policy, min_timesteps_per_batch, max_path_length, r
     """
         Collect rollouts until we have collected min_timesteps_per_batch steps.
 
-        TODO implement this function
+        DONE implement this function
         Hint1: use sample_trajectory to get each path (i.e. rollout) that goes into paths
         Hint2: use get_pathlength to count the timesteps collected in each path
     """
@@ -63,7 +63,7 @@ def sample_n_trajectories(env, policy, ntraj, max_path_length, render=False, ren
     """
         Collect ntraj rollouts.
 
-        TODO implement this function
+        DONE implement this function
         Hint1: use sample_trajectory to get each path (i.e. rollout) that goes into paths
     """
     paths = []
@@ -79,6 +79,7 @@ def calculate_mean_prediction_error(env, action_sequence, models, data_statistic
 
     # true
     true_states = perform_actions(env, action_sequence)['observation']
+    # print('true_states', true_states)
 
     # predicted
     ob = np.expand_dims(true_states[0],0)
@@ -88,9 +89,11 @@ def calculate_mean_prediction_error(env, action_sequence, models, data_statistic
         action = np.expand_dims(ac,0)
         ob = model.get_prediction(ob, action, data_statistics)
     pred_states = np.squeeze(pred_states)
+    # print('pred_states', pred_states)
 
     # mpe
     mpe = mean_squared_error(pred_states, true_states)
+    # print('mpe', mpe)
 
     return mpe, true_states, pred_states
 

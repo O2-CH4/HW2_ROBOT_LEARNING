@@ -34,11 +34,24 @@ def build_mlp(
     returns:
         MLP (nn.Module)
     """
+    if isinstance(kwargs["params"]["activations"][0], str):
+        activation = _str_to_activation[kwargs["params"]["activations"][0]]
     if isinstance(kwargs["params"]["output_activation"], str):
         output_activation = _str_to_activation[kwargs["params"]["output_activation"]]
-    # TODO: return a MLP. This should be an instance of nn.Module
+    # DONE: return a MLP. This should be an instance of nn.Module
     # Note: nn.Sequential is an instance of nn.Module.
-    raise NotImplementedError
+    modules = []
+    size = kwargs["params"]["layer_sizes"][0]
+    n_layers = len(kwargs["params"]["layer_sizes"])
+    modules.append(nn.Linear(input_size,size))
+    modules.append(activation)
+    for i in range(n_layers-2):
+        modules.append(nn.Linear(size,size))
+        modules.append(activation)
+    modules.append(nn.Linear(size,output_size))
+    modules.append(output_activation)
+    model = nn.Sequential(*modules)
+    return model
 
 device = None
 

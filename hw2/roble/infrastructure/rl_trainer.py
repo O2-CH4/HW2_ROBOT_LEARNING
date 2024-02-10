@@ -275,11 +275,14 @@ class RL_Trainer(RL_Trainer):
         assert self._params['alg']['ob_dim'] == true_states.shape[1] == pred_states.shape[1]
         ob_dim = self._params['alg']['ob_dim']
         ob_dim = 2*int(ob_dim/2.0) ## skip last state for plotting when state dim is odd
+        # print('mpe:', mpe)
+        # print('true_states:', true_states)
+        # print('pred_states:', pred_states)
 
         # plot the predictions
         self._fig.clf()
         for i in range(ob_dim):
-            plt.subplot(ob_dim/2, 2, i+1)
+            plt.subplot(ob_dim // 2, 2, i+1)
             plt.plot(true_states[:,i], 'g')
             plt.plot(pred_states[:,i], 'r')
         self._fig.suptitle('MPE: ' + str(mpe))

@@ -1,0 +1,42 @@
+env:
+  env_name: reacher-roble-v0
+  max_episode_length: 200
+  exp_name: q4_reacher_horizon5
+alg:
+  n_iter: 15
+  ensemble_size: 3
+  mpc_horizon: 5
+  mpc_num_action_sequences: 1000
+  mpc_action_sampling_strategy: random
+  cem_iterations: 4
+  cem_num_elites: 5
+  cem_alpha: 1
+  add_sl_noise: true
+  num_agent_train_steps_per_iter: 1000
+  batch_size_initial: 20000
+  batch_size: 800
+  train_batch_size: 512
+  eval_batch_size: 400
+  learning_rate: 0.001
+  seed: 5
+  use_gpu: false
+  gpu_id: 0
+  discrete: false
+  ac_dim: 0
+  ob_dim: 0
+  network:
+    layer_sizes:
+    - 256
+    - 256
+    activations:
+    - tanh
+    - tanh
+    output_activation: identity
+logging:
+  video_log_freq: -1
+  scalar_log_freq: 1
+  save_params: true
+  random_seed: 1234
+  logdir: /teamspace/studios/this_studio/robot_learning/hw2/data/hw2_q4_reacher_horizon5_reacher-roble-v0_09-02-2024_23-10-56
+  exp_name: hw2_q4_reacher_horizon5_reacher-roble-v0_09-02-2024_23-10-56
+save_params: true

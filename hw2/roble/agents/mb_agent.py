@@ -14,7 +14,7 @@ import numpy as np
 class MBAgent(BaseAgent):
     import hw1.roble.util.class_util as classu
     @classu.hidden_member_initialize
-    def __init__(self, env, params):
+    def __init__(self, env, params, **kwargs):
         super(MBAgent, self).__init__()
 
         self._env = env.unwrapped
@@ -34,6 +34,7 @@ class MBAgent(BaseAgent):
 
         self._replay_buffer = ReplayBuffer()
 
+    # DONE
     def train(self, ob_no, ac_na, re_n, next_ob_no, terminal_n):
         # training a MB agent refers to updating the predictive model using observed state transitions
         # NOTE: each model in the ensemble is trained on a different random batch of size batch_size
@@ -44,15 +45,16 @@ class MBAgent(BaseAgent):
         for i in range(self._params["ensemble_size"]):
             # select which datapoints to use for this model of the ensemble
             # you might find the num_data_per_env variable defined above useful
+            start_index = i * num_data_per_ens
+            end_index = (i + 1) * num_data_per_ens
 
-            # observations = # TODO(Q1)
-            # actions = # TODO(Q1)
-            # next_observations = # TODO(Q1)
+            observations = ob_no[start_index:end_index]
+            actions = ac_na[start_index:end_index]
+            next_observations = next_ob_no[start_index:end_index]
 
-            # # use datapoints to update one of the dyn_models
-            # model =  # TODO(Q1)
-            log = model.update(observations, actions, next_observations,
-                                self._data_statistics)
+            # use datapoints to update one of the dyn_models
+            model =  self._dyn_models[i]
+            log = model.update(observations, actions, next_observations, self._data_statistics)
             loss = log['Training Loss']
             losses.append(loss)
 
